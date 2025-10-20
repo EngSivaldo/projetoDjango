@@ -26,7 +26,8 @@ class Filme(models.Model):
         default='OUTROS'
     )  # categoria com base na lista acima
     visualizacoes = models.IntegerField(default=0)  # número de visualizações
-    data_criacao = models.DateTimeField(auto_now_add=True)
+    data_criacao = models.DateTimeField(default=timezone.now)
+
 
     def __str__(self):
         return self.titulo  # nome legível no painel admin
