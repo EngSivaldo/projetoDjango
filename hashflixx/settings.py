@@ -115,7 +115,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+
+# URL base para acessar os arquivos estáticos (CSS, JS, imagens do projeto)
 STATIC_URL = 'static/'
+
+# Lista de pastas onde o Django vai procurar por arquivos estáticos adicionais
+# (além dos arquivos estáticos dentro de cada app)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# URL base para acessar arquivos de mídia enviados por usuários (uploads)
+MEDIA_URL = 'media/'
+
+# Caminho físico dentro do projeto onde os arquivos de mídia serão salvos
+MEDIA_ROOT = BASE_DIR / "media"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
