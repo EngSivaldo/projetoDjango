@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+HomeFilmes Hashflix
+{% endblock %}
+
+{% block content %}
+
+<div class="py-10">
+
+    <h1> Esta é nossa HomeFilmes</h1>
+    {% for filme in lista_filmes %}
+    <hr>
+    <p> {{ filme }}</p>
+    <!--chamada da variavel criada na views-->
+    <p>{{ filme.descricao }}</p>
+    <img src="{{ filme.thumb.url }}">
+    {% endfor %}
+</div>
+
+
+{% endblock %}
