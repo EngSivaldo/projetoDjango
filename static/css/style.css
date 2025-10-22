@@ -1,0 +1,27 @@
+
+/*codigo da homepage*/
+body {
+    background-color: #141414;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+}
+.navbar {
+    background-color: #000;
+}
+.card {
+    background-color: #1f1f1f;
+    border: none;
+    transition: transform 0.3s;
+}
+.card:hover {
+    transform: scale(1.05);
+}
+.card img {
+    border-radius: 10px;
+    height: 300px;
+    object-fit: cover;
+}
+.titulo {
+    color: #e50914;
+    font-weight: bold;
+}
