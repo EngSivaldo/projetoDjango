@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+DetalhesFilmes Hashflix
+{% endblock %}
+
+{% block content %}
+
+<div class="py-10">
+
+    <h1> Este é os detalhes do filme:{{ object.titulo }}</h1>
+
+    <hr>
+    <p> {{ object }}</p>
+    <!--chamada da variavel criada na views-->
+    <p>{{ object.descricao }}</p>
+    <img src="{{ filme.thumb.url }}">
+
+</div>
+
+
+{% endblock %}

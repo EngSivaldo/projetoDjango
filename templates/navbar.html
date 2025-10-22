@@ -1,33 +1,37 @@
 {% load static %}
 
-<nav class="w-full flex justify-between items-center py- px-4 fixed z-50">
-  <div class="w-6/12">
-      <a href="#">
-          <img class="w-2/12" src="{% static 'images/preview.png' %}">
-      </a>
+<nav class="w-full flex justify-between items-center py-3 px-6 fixed top-0 z-50 bg-gradient-to-b from-black via-gray-900 to-black shadow-lg">
+    <!-- LOGO + TEXTO -->
+    <div class="flex items-center space-x-3">
+        <a href="/" class="flex items-center space-x-2 group">
+            <img class="w-12 sm:w-14 drop-shadow-lg transition-transform duration-300 group-hover:scale-110"
+                 src="{% static 'images/preview.png' %}" alt="Logo Programação">
+            <span class="text-red-600 text-2xl sm:text-3xl font-extrabold tracking-wide drop-shadow-md group-hover:text-white transition-colors duration-300">
+                Programação
+            </span>
+        </a>
+    </div>
 
-  </div>
-
-<div class="w-6/12 flex flex-nowrap justify-end">
-    <div class="mr-2">
+    <!-- PESQUISA + BOTÕES -->
+    <div class="flex items-center space-x-3">
         <form>
-            <input type="text" class="py-1 px-2 rounded-md  text-black " placeholder="Pesquisar">
+            <input
+                type="text"
+                class="py-1 px-3 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-red-500"
+                placeholder="Pesquisar..."
+            >
         </form>
-    </div>
-    <div class="mr-2">
-        <a>
-            <button class="bg-red-600 text-white py-1 px-33 rounded-md">Login</button>
 
+        <a href="#">
+            <button class="bg-red-600 hover:bg-red-700 text-white py-1 px-4 rounded-md shadow-md transition-all">
+                Login
+            </button>
+        </a>
+
+        <a href="#">
+            <button class="bg-gray-800 hover:bg-gray-700 text-white py-1 px-4 rounded-md shadow-md transition-all">
+                Editar Perfil
+            </button>
         </a>
     </div>
-    <div class="mr-2">
-        <a>
-            <button class="bg-red-600 text-white py-1 px-33 rounded-md">Editar Perfil</button>
-
-        </a>
-    </div>
-
-    </div>
-
-
 </nav>

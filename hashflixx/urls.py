@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 # 🔗 Rotas principais do site
 urlpatterns = [
     path('admin/', admin.site.urls),  # painel administrativo
-    path('', include('filme.urls')),  # inclui as rotas do app "filme"
+    path('', include('filme.urls', namespace='filme')),  # inclui as rotas do app "filme"
 ]
 
 # 🔧 Configuração para servir arquivos estáticos e de mídia durante o desenvolvimento
