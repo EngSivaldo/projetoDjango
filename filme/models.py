@@ -38,6 +38,7 @@ class Episodio(models.Model):
     titulo = models.CharField(max_length=100)
     video = models.URLField()
 
+
     def save(self, *args, **kwargs):
         # Converte automaticamente o link normal do YouTube em embed
         if "watch?v=" in self.video:

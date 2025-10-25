@@ -17,6 +17,13 @@ class Detalhesfilme(DetailView):
     template_name = "detalhesfilme.html"
     model = Filme
        # obeject -> item do modelo
+    def get_context_data(self, **kwargs):
+        context = super(Detalhesfilme, self).get_context_data(**kwargs)
+        #filtra a minha tabela de filmes, pegar filmes por categoria
+        #self.get_object()
+        filmes_relacionados = Filme.objects.filter(categoria=self.get_object().categoria)[0:5]
+        context["filmes_relacionados"]= filmes_relacionados
+        return context
 
 
 # ✅ Nova view para abrir o episódio em tela cheia

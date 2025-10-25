@@ -28,6 +28,18 @@ DetalhesFilmes Hashflix
 
 
 </div>
+<div class="py-4">
+    <h2>Filmes Relacionados:</h2>
+    {% for filme in filmes_relacionados %}
+   <p>
+        <!--link,pega o app filme na urls detalhes_filmes-->
+      <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+           {{ filme.titulo }}
+      </a>
+   </p>
+    {% endfor %}
+
+</div>
 
 
 {% endblock %}
