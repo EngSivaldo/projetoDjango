@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
-from filme.models import Filme
+from filme.models import Filme, Episodio
 
 
 class Homepage(TemplateView):
@@ -19,6 +19,10 @@ class Detalhesfilme(DetailView):
        # obeject -> item do modelo
 
 
+# ✅ Nova view para abrir o episódio em tela cheia
+class EpisodioDetailView(DetailView):
+    model = Episodio
+    template_name = "episodio_detalhe.html"
 
 # Create your views here.
 # def homepage(request):
