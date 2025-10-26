@@ -1,45 +1,41 @@
 {% extends 'base.html' %}
-{# Herda todo o layout base (navbar, rodapé, estrutura da página) #}
-
 {% load static %}
-{# Permite usar {% static %} para imagens, CSS e JS #}
 
 {% block titulo %}
-{# Define o conteúdo do <title> no base.html #}
 HomeFilmes Hashflix
 {% endblock %}
 
 {% block content %}
-{# Início do conteúdo principal da página #}
-
 <div class="py-10">
-    {# Espaçamento vertical (padding) para separar o conteúdo da navbar #}
-
-    <h1>Esta é nossa HomeFilmes</h1>
-    {# Título principal da página #}
+    <h1>HomeFilmes Page</h1>
 
     {% for filme in object_list %}
-    {# Loop que percorre todos os filmes enviados pela ListView #}
-
-    <hr>
-    {# Linha horizontal para separar visualmente cada filme #}
-
-    <a href="{% url 'filme:detalhesfilme' filme.pk %}">
-        {# Link para a página de detalhes do filme usando o id do filme (pk) #}
-        <p>{{ filme.titulo }}</p>
-        {# Exibe o título do filme #}
-    </a>
-
-    <p>{{ filme.descricao }}</p>
-    {# Exibe a descrição do filme #}
-
-    <img src="{{ filme.thumb.url }}">
-    {# Exibe a imagem (thumbnail) do filme #}
-
+        <hr>
+        <a href="{% url 'filme:detalhesfilme' filme.pk %}">
+            <p>{{ filme.titulo }}</p>
+        </a>
+        <p>{{ filme.descricao }}</p>
+        <img src="{{ filme.thumb.url }}" alt="{{ filme.titulo }}">
     {% endfor %}
-    {# Fim do loop de filmes #}
-
 </div>
 
+<div class="py-10">
+    <h2>New Movies</h2>
+    {% for filme in lista_filmes_recentes %}
+        <p>{{ filme.titulo }}</p>
+    {% empty %}
+        <p>No recent movies found.</p>
+    {% endfor %}
+</div>
+
+
+<div class="py-10">
+    <h2>Filmes em Alta</h2>
+    {% for filme in lista_filmes_emalta %}
+        <p>{{ filme.titulo }}</p>
+        <img src="{{ filme.thumb.url }}" alt="{{ filme.titulo }}">
+    {% empty %}
+        <p>Nenhum filme em alta encontrado.</p>
+    {% endfor %}
+</div>
 {% endblock %}
-{# Fim do bloco de conteúdo principal #}
