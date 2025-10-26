@@ -16,7 +16,17 @@ class Homefilmes(ListView):
 class Detalhesfilme(DetailView):
     template_name = "detalhesfilme.html"
     model = Filme
-       # obeject -> item do modelo
+
+    def get(self, request, *args, **kwargs):
+        # descobrir filme ta assistindo
+        filme = self.get_object()
+        filme.visualizacoes += 1
+        # salvar
+        filme.save()
+        return super().get(request, *args, **kwargs)# redireciona para url final
+
+
+
     def get_context_data(self, **kwargs):
         context = super(Detalhesfilme, self).get_context_data(**kwargs)
         #filtra a minha tabela de filmes, pegar filmes por categoria
