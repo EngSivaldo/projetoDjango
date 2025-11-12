@@ -31,7 +31,7 @@ class Detalhesfilme(DetailView):
         context = super(Detalhesfilme, self).get_context_data(**kwargs)
         #filtra a minha tabela de filmes, pegar filmes por categoria
         #self.get_object()
-        filmes_relacionados = Filme.objects.filter(categoria=self.get_object().categoria)[0:5]
+        filmes_relacionados = self.model.objects.filter(categoria=self.get_object().categoria)[0:5]
         context["filmes_relacionados"]= filmes_relacionados
         return context
 
@@ -40,6 +40,29 @@ class Detalhesfilme(DetailView):
 class EpisodioDetailView(DetailView):
     model = Episodio
     template_name = "episodio_detalhe.html"
+
+
+
+class Pesquisafilme(ListView):
+    template_name = "pesquisa.html"
+    model = Filme
+
+    def get_queryset(self):
+        termopesquisa = self.request.GET.get('query')
+        if termopesquisa:
+            object_list = Filme.objects.filter(titulo__icontains=termopesquisa)
+            return object_list
+        else:
+            return None
+
+
+
+
+
+
+
+
+
 
 # Create your views here.
 # def homepage(request):

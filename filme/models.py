@@ -10,9 +10,6 @@ LISTA_CATEGORIAS = (
     ("APRESENTACAO", "Apresentação"),
     ("OUTROS", "Outros"),
 
-
-
-
 )
 
 # Modelo Filme
