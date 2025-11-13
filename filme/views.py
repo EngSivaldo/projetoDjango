@@ -18,13 +18,23 @@ class Detalhesfilme(DetailView):
     model = Filme
 
     def get(self, request, *args, **kwargs):
-        # descobrir filme ta assistindo
+        # 1. Obter o objeto filme
         filme = self.get_object()
-        filme.visualizacoes += 1
-        # salvar
-        filme.save()
-        return super().get(request, *args, **kwargs)# redireciona para url final
 
+        # 2. Incrementar visualizações
+        filme.visualizacoes += 1
+        filme.save()
+
+        # ✅ 3. Lógica para adicionar o filme na lista 'filmes_vistos' do usuário
+        # ⚠️ IMPORTANTE: Estamos usando 'filmes_vistos' (com underscore)
+        # baseado na sua migração RenameField.
+        if request.user.is_authenticated:
+            # O método .add() garante que só será adicionado se o filme ainda não estiver na lista.
+            request.user.filmes_vistos.add(filme)
+
+        return super().get(request, *args, **kwargs) # redireciona para url final
+
+    # ... (o restante da sua get_context_data permanece inalterado)
 
 
     def get_context_data(self, **kwargs):

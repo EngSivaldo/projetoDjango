@@ -51,6 +51,6 @@ class Episodio(models.Model):
 
 
 class Usuario(AbstractUser):
-    filmesvistos = models.ManyToManyField("Filme")
+    filmes_vistos = models.ManyToManyField("Filme")
 
 #depois de criar modelo. registre no admin
