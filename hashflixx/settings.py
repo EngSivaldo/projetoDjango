@@ -142,4 +142,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#PARA ONDE O uSUARIO sera REDIRECIONADO QUANDO FIZER LOGIN
+LOGIN_REDIRECT_URL = "filme:homefilmes"
 
+#LINK ONDE O USUARIO FAZ LOGIN
+LOGIN_URL = "filme:login"

@@ -1,19 +1,20 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from filme.models import Filme, Episodio
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class Homepage(TemplateView):
     template_name = "homepage.html"
 
 
-class Homefilmes(ListView):
+class Homefilmes(LoginRequiredMixin,ListView):
     template_name = "homefilmes.html"
     model = Filme
    # obeject_list -> lista de itens do modelo
 
 
-class Detalhesfilme(DetailView):
+class Detalhesfilme(LoginRequiredMixin,DetailView):
     template_name = "detalhesfilme.html"
     model = Filme
 
@@ -26,8 +27,6 @@ class Detalhesfilme(DetailView):
         filme.save()
 
         # ✅ 3. Lógica para adicionar o filme na lista 'filmes_vistos' do usuário
-        # ⚠️ IMPORTANTE: Estamos usando 'filmes_vistos' (com underscore)
-        # baseado na sua migração RenameField.
         if request.user.is_authenticated:
             # O método .add() garante que só será adicionado se o filme ainda não estiver na lista.
             request.user.filmes_vistos.add(filme)
@@ -47,13 +46,13 @@ class Detalhesfilme(DetailView):
 
 
 # ✅ Nova view para abrir o episódio em tela cheia
-class EpisodioDetailView(DetailView):
+class EpisodioDetailView(LoginRequiredMixin,DetailView):
     model = Episodio
     template_name = "episodio_detalhe.html"
 
 
 
-class Pesquisafilme(ListView):
+class Pesquisafilme(LoginRequiredMixin, ListView):
     template_name = "pesquisa.html"
     model = Filme
 
