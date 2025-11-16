@@ -18,6 +18,7 @@
 
     <div class="flex items-center space-x-3">
           <div class="mr-2">
+              <!--condicao para mostrar ou nao, campo de pesquisa-->
             {% if user.is_authenticated %}
             <form method="get" action="{% url 'filme:pesquisafilme' %}">
 
@@ -28,25 +29,33 @@
             </form>
            </div>
         {% endif %}
-       <!--inicio Div de login-->
+       <!--inicio Div de login, se autenticado ,mostra botao de sair-->
         <div class="mr-2">
-        {% if user.is_authenticated %}
-         <a href="{% url 'filme:login' %}"
-           class="bg-red-600 hover:bg-red-700 text-white py-1 px-4 rounded-md shadow-md transition-all inline-block">
-            Sair
-        </a>
-        {% else %}
-       <a href="{% url 'filme:login' %}"
-           class="bg-red-600 hover:bg-red-700 text-white py-1 px-4 rounded-md shadow-md transition-all inline-block">
-            Login
-        </a>
-        {% endif %}
+            {% if user.is_authenticated %}
+
+                <form method="post" action="{% url 'filme:logout' %}" class="inline-block">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="bg-red-600 hover:bg-red-700 text-white py-1 px-4 rounded-md shadow-md transition-all">
+                        Sair
+                    </button>
+                </form>
+
+            {% else %}
+
+                <a href="{% url 'filme:login' %}"
+                   class="bg-red-600 hover:bg-red-700 text-white py-1 px-4 rounded-md shadow-md transition-all inline-block">
+                    Login
+                </a>
+
+            {% endif %}
         </div>
+
         <!--fim Div de login-->
 
          <div class="mr-2">
              {% if user.is_authenticated %}
-            <a href="#">
+            <a href="{% url 'filme:editarperfil' %}">
                 <button class="bg-gray-800 hover:bg-gray-700 text-white py-1 px-4 rounded-md shadow-md transition-all">
                     Editar Perfil
                 </button>

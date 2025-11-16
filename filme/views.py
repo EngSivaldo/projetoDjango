@@ -9,9 +9,9 @@ class Homepage(TemplateView):
 
     def get(self, request, *args,**kwargs):
         if request.user.is_authenticated:#se usuario autenticado
-            return redirect('filme:homefilmes')#red para homefilmes
+            return redirect('filme:homefilmes')#redirec para homefilmes
         else:
-            return super().get(request, *args, **kwargs)#red para homepage
+            return super().get(request, *args, **kwargs)#redirec para homepage
 
 #bloquear usu nao logado(LoginRequiredMixin),cofig, no settings(redirecionaRr
 class Homefilmes(LoginRequiredMixin, ListView):
@@ -72,7 +72,8 @@ class Pesquisafilme(LoginRequiredMixin, ListView):
 
 
 
-
+class Paginaperfil(LoginRequiredMixin, TemplateView):
+    template_name = "editarperfil.html"
 
 
 
