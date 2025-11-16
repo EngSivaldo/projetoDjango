@@ -142,8 +142,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#PARA ONDE O uSUARIO sera REDIRECIONADO QUANDO FIZER LOGIN
+#PARA ONDE O USUARIO sera REDIRECIONADO QUANDO FIZER LOGIN
 LOGIN_REDIRECT_URL = "filme:homefilmes"
 
-#LINK ONDE O USUARIO FAZ LOGIN
+#LINK ONDE O USUARIO FAZ LOGIN(login.html) criar a  url ,no urls.py(filme)nao precisa criar a view, pouqe ja existe uma padrao do django
 LOGIN_URL = "filme:login"

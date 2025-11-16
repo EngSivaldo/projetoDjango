@@ -3,7 +3,7 @@ from django.urls import path, include
 
 from .views import Homepage, Homefilmes,Detalhesfilme,Pesquisafilme
 from . import views
-from django.contrib.auth import views as auth_view
+from django.contrib.auth import views as auth_view#para criar url de login padrao
 
 app_name = 'filme'
 # nome do app(filme)

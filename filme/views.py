@@ -1,14 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView, DetailView
 from filme.models import Filme, Episodio
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin#bloquear usu nao logado
 
 
 class Homepage(TemplateView):
     template_name = "homepage.html"
 
+    def get(self, request, *args,**kwargs):
+        if request.user.is_authenticated:#se usuario autenticado
+            return redirect('filme:homefilmes')#red para homefilmes
+        else:
+            return super().get(request, *args, **kwargs)#red para homepage
 
-class Homefilmes(LoginRequiredMixin,ListView):
+#bloquear usu nao logado(LoginRequiredMixin),cofig, no settings(redirecionaRr
+class Homefilmes(LoginRequiredMixin, ListView):
     template_name = "homefilmes.html"
     model = Filme
    # obeject_list -> lista de itens do modelo
