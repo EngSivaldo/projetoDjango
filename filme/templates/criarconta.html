@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Criar Conta - Hashflix
+{% endblock %}
+
+{% block content %}
+<header class="min-h-screen bg-black bg-opacity-50 bg-blend-overlay showcase border-gray-600 border-b-8
+               flex justify-center items-center bg-no-repeat"
+        style="background-image: url('{% static 'images/background_netflix.jpg' %}');">
+
+    <div class="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md border border-gray-700">
+
+        <h2 class="text-3xl font-bold text-center text-red-500 mb-6">
+            Criar Conta
+        </h2>
+
+        <!-- Exibir erros do formulário -->
+        {% if form.errors %}
+        <div class="bg-red-600 bg-opacity-90 text-white p-4 rounded-lg mb-4 shadow-lg">
+            <ul class="list-disc list-inside space-y-1 text-sm">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+
+            <!-- Usuário -->
+            <div>
+                <label class="block text-gray-300">Usuário</label>
+                {{ form.username }}
+            </div>
+
+            <!-- E-mail -->
+            <div>
+                <label class="block text-gray-300">E-mail</label>
+                {{ form.email }}
+            </div>
+
+            <!-- Senha -->
+            <div>
+                <label class="block text-gray-300">Senha</label>
+                {{ form.password1 }}
+            </div>
+
+            <!-- Confirmar senha -->
+            <div>
+                <label class="block text-gray-300">Confirmar senha</label>
+                {{ form.password2 }}
+            </div>
+
+            <button type="submit"
+                class="w-full bg-red-600 hover:bg-red-700 transition-all p-3 rounded text-white font-bold shadow-md">
+                Criar Conta
+            </button>
+        </form>
+
+        <p class="text-gray-400 text-center mt-4">
+            Já tem conta?
+            <a href="{% url 'filme:login' %}" class="text-red-500 hover:underline">
+                Entrar agora
+            </a>
+        </p>
+
+    </div>
+</header>
+{% endblock %}

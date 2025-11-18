@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'filme',  # conectar o app "filme" ao projeto hashflix
+     "crispy_forms",
+    "crispy_tailwind",
 ]
 
 MIDDLEWARE = [
@@ -147,3 +149,7 @@ LOGIN_REDIRECT_URL = "filme:homefilmes"
 
 #LINK ONDE O USUARIO FAZ LOGIN(login.html) criar a  url ,no urls.py(filme)nao precisa criar a view, pouqe ja existe uma padrao do django
 LOGIN_URL = "filme:login"
+AUTH_USER_MODEL = 'filme.Usuario'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"

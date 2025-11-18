@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView, DetailView
 from filme.models import Filme, Episodio
 from django.contrib.auth.mixins import LoginRequiredMixin#bloquear usu nao logado
-
+from django.views import View
+from django.shortcuts import render, redirect
+from .forms import CustomUserCreationForm
 
 class Homepage(TemplateView):
     template_name = "homepage.html"
@@ -76,13 +78,38 @@ class Paginaperfil(LoginRequiredMixin, TemplateView):
     template_name = "editarperfil.html"
 
 
+class Criarconta(View):
+    def get(self, request):
+        form = CustomUserCreationForm()
+        return render(request, "criarconta.html", {"form": form})
 
+    def post(self, request):
+        form = CustomUserCreationForm(request.POST)
 
+        if not form.is_valid():
+            # Dicionário para substituir mensagens padrões
+            mensagens_custom = {
+                "This password is too short. It must contain at least 8 characters.":
+                    "A senha precisa ter no mínimo 8 caracteres.",
+                "This password is too common.":
+                    "A senha escolhida é muito comum. Tente uma mais forte.",
+                "This password is entirely numeric.":
+                    "A senha não pode ser apenas números.",
+            }
 
+            # Substitui mensagens
+            for field in form.errors:
+                novas_msgs = []
+                for erro in form.errors[field]:
+                    novas_msgs.append(mensagens_custom.get(erro, erro))
+                form.errors[field] = novas_msgs
 
-# Create your views here.
-# def homepage(request):
-#     return render(request, "homepage.html")
+        if form.is_valid():
+            form.save()
+            return redirect("filme:login")
+
+        return render(request, "criarconta.html", {"form": form})
+
 
 
 
