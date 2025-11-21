@@ -1,19 +1,32 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, ListView, DetailView
-from filme.models import Filme, Episodio
+from django.views.generic import TemplateView, ListView, DetailView, FormView
+from filme.models import Filme, Episodio, Usuario
 from django.contrib.auth.mixins import LoginRequiredMixin#bloquear usu nao logado
 from django.views import View
 from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CriarContaForm, FormHomepage
+from django.urls import reverse_lazy
 
-class Homepage(TemplateView):
+
+from django.contrib.auth.mixins import UserPassesTestMixin
+
+class Homepage(UserPassesTestMixin, FormView):
     template_name = "homepage.html"
+    form_class = FormHomepage
 
-    def get(self, request, *args,**kwargs):
-        if request.user.is_authenticated:#se usuario autenticado
-            return redirect('filme:homefilmes')#redirec para homefilmes
-        else:
-            return super().get(request, *args, **kwargs)#redirec para homepage
+    def test_func(self):
+        return not self.request.user.is_authenticated
+
+    def handle_no_permission(self):
+        return redirect('filme:homefilmes')
+
+    def get_success_url(self):
+        email = self.request.POST.get("email")
+        if Usuario.objects.filter(email=email).exists():
+            return reverse_lazy('filme:login')
+        return reverse_lazy('filme:criarconta')
+
+
 
 #bloquear usu nao logado(LoginRequiredMixin),cofig, no settings(redirecionaRr
 class Homefilmes(LoginRequiredMixin, ListView):
@@ -74,45 +87,85 @@ class Pesquisafilme(LoginRequiredMixin, ListView):
 
 
 
-class Paginaperfil(LoginRequiredMixin, TemplateView):
-    template_name = "editarperfil.html"
+class Paginaperfil(LoginRequiredMixin, View):
 
-
-class Criarconta(View):
     def get(self, request):
-        form = CustomUserCreationForm()
-        return render(request, "criarconta.html", {"form": form})
+        return render(request, "editarperfil.html")
 
     def post(self, request):
-        form = CustomUserCreationForm(request.POST)
 
-        if not form.is_valid():
-            # Dicionário para substituir mensagens padrões
-            mensagens_custom = {
-                "This password is too short. It must contain at least 8 characters.":
-                    "A senha precisa ter no mínimo 8 caracteres.",
-                "This password is too common.":
-                    "A senha escolhida é muito comum. Tente uma mais forte.",
-                "This password is entirely numeric.":
-                    "A senha não pode ser apenas números.",
-            }
+        user = request.user
 
-            # Substitui mensagens
-            for field in form.errors:
-                novas_msgs = []
-                for erro in form.errors[field]:
-                    novas_msgs.append(mensagens_custom.get(erro, erro))
-                form.errors[field] = novas_msgs
+        # Recebe dados do formulário
+        user.first_name = request.POST.get("first_name")
+        user.last_name = request.POST.get("last_name")
+        user.email = request.POST.get("email")
+        user.save()
 
-        if form.is_valid():
-            form.save()
-            return redirect("filme:login")
+        # Atualiza foto
+        perfil = user.perfil  # seu OneToOneField
+        foto = request.FILES.get("foto")
 
-        return render(request, "criarconta.html", {"form": form})
+        if foto:
+            perfil.foto = foto
+            perfil.save()
+
+        return redirect("filme:homepage")
 
 
+class Criarconta(FormView):
+    template_name = "criarconta.html"
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy("filme:login")
+
+    mensagens_custom = {
+        "This password is too short. It must contain at least 8 characters.":
+            "A senha precisa ter no mínimo 8 caracteres.",
+        "This password is too common.":
+            "A senha escolhida é muito comum. Tente uma mais forte.",
+        "This password is entirely numeric.":
+            "A senha não pode ser apenas números.",
+    }
+
+    def form_invalid(self, form):
+        # Substitui mensagens padrões pelas mensagens customizadas
+        for field in form.errors:
+            novas_msgs = []
+            for erro in form.errors[field]:
+                novas_msgs.append(self.mensagens_custom.get(erro, erro))
+            form.errors[field] = novas_msgs
+
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
+
+
+
+class EditarPerfilView(LoginRequiredMixin, View):
+    template_name = "editarperfil.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        user = request.user
+
+        # Atualizar dados básicos
+        user.first_name = request.POST.get("first_name")
+        user.last_name = request.POST.get("last_name")
+        user.email = request.POST.get("email")
+        user.save()
+
+        # Atualizar foto do perfil (se enviada)
+        if "foto" in request.FILES:
+            user.perfil.foto = request.FILES["foto"]
+            user.perfil.save()
+
+        return redirect("filme:editarperfil")  # ← FICA NA MESMA PÁGINA
 
 
 

@@ -1,7 +1,7 @@
 # url, view, template
 from django.urls import path, include
 
-from .views import Homepage, Homefilmes,Detalhesfilme,Pesquisafilme, Paginaperfil,Criarconta
+from .views import Homepage, Homefilmes,Detalhesfilme,Pesquisafilme, Paginaperfil,Criarconta,EditarPerfilView
 from . import views
 from django.contrib.auth import views as auth_view#para criar url de login padrao
 
@@ -21,6 +21,8 @@ urlpatterns = [
     path('logout/',auth_view.LogoutView.as_view(template_name='logout.html') , name='logout'),
     path('editarperfil/', Paginaperfil.as_view(), name='editarperfil'),
     path('criarconta/', Criarconta.as_view(), name='criarconta'),
+    path("editarperfil/", EditarPerfilView.as_view(), name="editarperfil"),
+
 
 
 ]

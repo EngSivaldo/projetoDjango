@@ -1,16 +1,24 @@
 from django.contrib.auth.forms import UserCreationForm
 from .models import Usuario
+from django import forms
+
+
+
+class FormHomepage(forms.Form):
+    email = forms.EmailField(
+        label="",
+        widget=forms.EmailInput(attrs={
+            "class": "form-control",
+            "placeholder": "Digite seu e-mail"
+        })
+    )
 
 class CriarContaForm(UserCreationForm):
+    email = forms.EmailField()
     class Meta:
         model = Usuario
-        fields = ("username", "password1", "password2")
+        fields = ("username",'email', "password1", "password2")
 
-
-
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from .models import Usuario
 
 
 class CustomUserCreationForm(UserCreationForm):

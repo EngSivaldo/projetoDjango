@@ -54,3 +54,22 @@ class Usuario(AbstractUser):
     filmes_vistos = models.ManyToManyField("Filme")
 
 #depois de criar modelo. registre no admin
+
+class Perfil(models.Model):
+    user = models.OneToOneField(
+        Usuario,
+        on_delete=models.CASCADE,
+        related_name="perfil"
+    )
+    foto = models.ImageField(upload_to="fotos/", blank=True, null=True)
+
+    def __str__(self):
+        return f"Perfil de {self.user.username}"
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=Usuario)
+def criar_perfil(sender, instance, created, **kwargs):
+    if created:
+        Perfil.objects.create(user=instance)
