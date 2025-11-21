@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Logout
+{% endblock %}
+
+{% block content %}
+<header class="min-h-screen bg-black bg-opacity-50 bg-blend-overlay showcase border-gray-600 border-b-8 flex justify-center items-center bg-no-repeat"  style="background-image: url('{% static 'images/background_netflix.jpg' %}');">
+
+    <div class="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md border border-gray-700">
+
+        <h2 class="text-3xl font-bold text-red-500 text-center mb-6">
+            Você saiu da sua conta
+        </h2>
+
+        <p class="text-gray-300 text-center mb-6">
+            Obrigado por usar o Hashflix!
+        </p>
+
+        <div class="flex flex-col space-y-4">
+
+            <a href="{% url 'filme:login' %}">
+                <button class="w-full bg-red-600 hover:bg-red-700 transition-all p-3 rounded-lg text-white font-bold shadow-md">
+                    Fazer login novamente
+                </button>
+            </a>
+              <a href="{% url 'filme:criarconta' %}">
+                <button class="w-full bg-red-600 hover:bg-red-700 transition-all p-3 rounded-lg text-white font-bold shadow-md">
+                    Criar Conta
+                </button>
+            </a>
+
+            <a href="{% url 'filme:homepage' %}">
+                <button class="w-full bg-gray-700 hover:bg-gray-600 transition-all p-3 rounded-lg text-white font-semibold shadow">
+                    Voltar para a Home
+                </button>
+            </a>
+        </div>
+    </div>
+
+</header>
+
+<footer>
+
+</footer>
+
+{% endblock %}

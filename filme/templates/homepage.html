@@ -5,6 +5,29 @@
 HomePage Hashflix
 {% endblock %}
 
+{% block head %}
+<style>
+    /* Estilo aplicado ao input gerado pelo Django */
+    #id_email {
+        width: 100%;
+        color: black;
+        padding: 5px 5px;
+        border: 1px solid #ccc;
+        border-right: none;
+        border-radius: 4px 0 0 4px;
+    }
+
+    #id_email:focus {
+        outline: none;
+        border-color: #e50914;
+        box-shadow: 0 0 3px #e50914;
+    }
+</style>
+
+{% endblock %}
+
+
+
 {% block content %}
     <header class="min-h-screen bg-black bg-opacity-50 bg-blend-overlay showcase border-gray-600 border-b-8 flex justify-center items-center bg-no-repeat"  style="background-image: url('{% static 'images/background_netflix.jpg' %}');">
         <div class="z-10 h-full py-32 md:py-0 text-gray-100 text-center flex items-center flex-col">
@@ -20,20 +43,32 @@ HomePage Hashflix
             </h4>
 
             <div class="w-full flex justify-center">
-                <div class="flex justify-center items-center w-11/12 md:w-10/12">
-                    <form method="post" class="w-6/12 justify-center">
-                        <div class="flex flex-grow items-stretch">
-                            <input>
-                        <button class="bg-red-600 font-medium md:font-normal flex justify-center items-center py-2 px-3 md:px-0 rounded-br-sm rounded-tr-sm md:text-2xl" type="submit">
-                            <span>
-                                Acessar
-                            </span>
-                            <ion-icon name="chevron-forward-outline" class="text-2xl"></ion-icon>
-                        </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div class="flex justify-center items-center w-11/12 md:w-10/12">
+
+       <form method="post" class="w-6/12 justify-center">
+    {% csrf_token %}
+
+    <div class="flex flex-grow items-stretch">
+
+        <!-- Campo do formulário Django (mantido, agora estilizado) -->
+        {{ form.email }}
+
+        <!-- Botão -->
+        <button
+            class="bg-red-600 text-white font-medium md:font-normal flex justify-center items-center
+                    py-2 px-3 md:px-5 rounded-r-sm md:text-2xl hover:bg-red-700 transition"
+            type="submit">
+
+            <span>Acessar</span>
+            <ion-icon name="chevron-forward-outline" class="text-2xl ms-1"></ion-icon>
+        </button>
+
+    </div>
+</form>
+
+    </div>
+</div>
+
 
         </div>
     </header>

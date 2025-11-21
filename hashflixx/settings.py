@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'filme',  # conectar o app "filme" ao projeto hashflix
+     "crispy_forms",
+    "crispy_tailwind",
 ]
 
 MIDDLEWARE = [
@@ -87,6 +89,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+AUTH_USER_MODEL = 'filme.Usuario'  # use o nome do app onde o modelo está
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -140,3 +143,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#PARA ONDE O USUARIO sera REDIRECIONADO QUANDO FIZER LOGIN
+LOGIN_REDIRECT_URL = "filme:homefilmes"
+
+#LINK ONDE O USUARIO FAZ LOGIN(login.html) criar a  url ,no urls.py(filme)nao precisa criar a view, pouqe ja existe uma padrao do django
+LOGIN_URL = "filme:login"
+AUTH_USER_MODEL = 'filme.Usuario'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"
